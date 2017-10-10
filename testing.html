@@ -47,7 +47,7 @@ var video = document.querySelector('video');
         .catch(function(err) { console.log(err.name + ": " + err.message); });
 
 var front = false;
-document.getElementById('flip-button').onclick = function() { front = !front; };
+//document.getElementById('flip-button').onclick = function() { front = !front; };
 
 var constraints = { video: { facingMode: (front? "user" : "environment") } };
 
@@ -71,7 +71,7 @@ var constraints = { video: { facingMode: (front? "user" : "environment") } };
             context.drawImage(image, rect.x, rect.y, rect.width, rect.height);
         });
     });
-    
+
     </script>
 </body>
 
