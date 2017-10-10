@@ -27,7 +27,7 @@
 <body>
     <div class="demo-frame">
         <div class="demo-container">
-            <video id="video" width="640" height="480" preload playsinline autoplay loop muted></video>
+            <video id="video" width="640" height="480" preload playsinline autoplay muted></video>
             <canvas id="canvas" width="640" height="480"></canvas>
         </div>
     </div>
@@ -51,26 +51,27 @@ document.getElementById('flip-button').onclick = function() { front = !front; };
 
 var constraints = { video: { facingMode: (front? "user" : "environment") } };
 
-    // var video = document.getElementById('video');
-    // var canvas = document.getElementById('canvas');
-    // var context = canvas.getContext('2d');
-    // var image = document.getElementById('source');
+    var video = document.getElementById('video');
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var image = document.getElementById('source');
 
-    // var tracker = new tracking.ObjectTracker('face');
-    // tracker.setInitialScale(4);
-    // tracker.setStepSize(1);
-    // tracker.setEdgesDensity(0.1);
+    var tracker = new tracking.ObjectTracker('face');
+    tracker.setInitialScale(4);
+    tracker.setStepSize(1);
+    tracker.setEdgesDensity(0.1);
 
-    // tracking.track('#video', tracker, { camera: true });
+    tracking.track('#video', tracker, { camera: true });
 
-    // tracker.on('track', function(event) {
-    //     context.clearRect(0, 0, canvas.width, canvas.height);
+    tracker.on('track', function(event) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
 
-    //     event.data.forEach(function(rect) {
+        event.data.forEach(function(rect) {
 
-    //         context.drawImage(image, rect.x, rect.y, rect.width, rect.height);
-    //     });
-    // });
+            context.drawImage(image, rect.x, rect.y, rect.width, rect.height);
+        });
+    });
+    
     </script>
 </body>
 
