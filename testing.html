@@ -27,14 +27,15 @@
 <body>
     <div class="demo-frame">
         <div class="demo-container">
-            <video id="video" width="640" height="480" preload autoplay loop muted></video>
+            <video id="video" width="640" height="480" preload playsinline autoplay loop muted></video>
             <canvas id="canvas" width="640" height="480"></canvas>
         </div>
     </div>
     <script src="http://api.html5media.info/1.1.8/html5media.min.js"></script>
     <img id="source" src="http://moziru.com/images/emotions-clipart-smiley-face-clip-art-9.gif" width="300" height="227">
     <script>
-    var constraints = { audio: true, video: { width: 1280, height: 720 } };
+
+var constraints = { audio: true, video: { width: 1280, height: 720 } };
 var video = document.querySelector('video');
     navigator.mediaDevices.getUserMedia(constraints)
         .then(function(mediaStream) {    
