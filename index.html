@@ -12,52 +12,84 @@
 <!--   <script src="assets/stats.min.js"></script> -->
 
   <style>
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
   video, canvas {
     position: absolute;
-    left: 20%;
-    top: 10%;
+    left: 0px;
+    top: 0px;
+    border: 1px solid black;
+
   }
   #source{
+    opacity: 0;
+  }
+  #smile{
     opacity: 0;
   }
   </style>
 </head>
 <body>
 
-  <div class="demo-frame">
-    <div class="demo-container">
-      <video id="video" width="640" height="480" preload autoplay loop muted></video>
-      <canvas id="canvas" width="640" height="480"></canvas>
-    </div>
-  </div>
+      <video id="video" width="750" height="500" preload autoplay loop muted></video>
+      <canvas id="canvas" width="750" height="500"></canvas>
+
   <script src="http://api.html5media.info/1.1.8/html5media.min.js"></script>
   <img id="source" src="http://moziru.com/images/emotions-clipart-smiley-face-clip-art-9.gif"
        width="300" height="227">
+  <img id="smile" src="smile.png">
 
   <script>
     window.onload = function() {
       var video = document.getElementById('video');
       var canvas = document.getElementById('canvas');
       var context = canvas.getContext('2d');
-      var image = document.getElementById('source');
+      var image = document.getElementById('smile');
+      var moutharray;
 
-      var tracker = new tracking.ObjectTracker('face');
-      tracker.setInitialScale(4);
-      tracker.setStepSize(1);
-      tracker.setEdgesDensity(0.1);
+      var faceTracker = new tracking.ObjectTracker('face');
+      var mouthTracker = new tracking.ObjectTracker('mouth');
 
-      tracking.track('#video', tracker, { camera: true });
+      faceTracker.setInitialScale(4);
+      faceTracker.setStepSize(2.2);
+      faceTracker.setEdgesDensity(0.1);
 
-      tracker.on('track', function(event) {
-        context.clearRect(0, 0, canvas.width, canvas.height);
+      mouthTracker.setInitialScale(1);
+      mouthTracker.setStepSize(2.2);
+      mouthTracker.setEdgesDensity(0.08);
 
-        event.data.forEach(function(rect) {
+      tracking.track('#video', faceTracker, { camera: true });
+      tracking.track('#video', mouthTracker, { camera: true });
 
-          context.drawImage(image, rect.x, rect.y, rect.width, rect.height);
-        });
+      mouthTracker.on('track', function(event) {
+        moutharray = event;
       });
 
-    };
+      faceTracker.on('track', function(event) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        event.data.forEach(function(faceRect) {
+          moutharray.data.forEach(function(mouthRect){
+            if(mouthRect.x > faceRect.x && mouthRect.x < (faceRect.x + faceRect.width) && mouthRect.y > faceRect.y + ((faceRect.height)*2/3) && mouthRect.y < (faceRect.y + faceRect.height)){
+               //context.clearRect(0, 0, canvas.width, canvas.height);
+               context.drawImage(image, mouthRect.x - 8.5, mouthRect.y - 5, mouthRect.width + 20, mouthRect.height + 10);
+            }
+          });
+        });
+      });
+// faceTracker.on('track', function(event) {
+//         context.clearRect(0, 0, canvas.width, canvas.height);
+
+//         event.data.forEach(function(rect) {
+
+//             context.drawImage(image, rect.x, rect.y, rect.width, rect.height);
+//         });
+//     });
+
+};
   </script>
 
 </body>

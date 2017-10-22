@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>tracking.js - face with camera</title>
+<!--   <link rel="stylesheet" href="assets/demo.css"> -->
+  <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.16/p5.min.js"></script>
+
+  <script src="tracking/tracking-min.js"></script>
+  <script src="tracking/data/face-min.js"></script>
+  <script src="tracking/data/mouth.js"></script>
+
+  <script src="sketch.js"></script>
+<!--    <script src="../node_modules/dat.gui/build/dat.gui.min.js"></script> -->
+<!--   <script src="assets/stats.min.js"></script> -->
+
+  <style>
+  body{
+    margin: 0;
+    overflow: hidden;
+  }
+  video, canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  #source{
+    opacity: 0;
+  }
+  </style>
+
+  <audio controls autoplay loop>
+  <source src="natural-no-koishite.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+</head>
+<body>
+
+  <div class="demo-frame">
+    <div class="demo-container">
+      <video id="video" width="1280" height="960" preload autoplay loop muted></video>
+      <canvas id="canvas" width="1280" height="960"></canvas>
+    </div>
+  </div>
+  <script src="http://api.html5media.info/1.1.8/html5media.min.js"></script>
+  <img id="source" src="http://moziru.com/images/emotions-clipart-smiley-face-clip-art-9.gif"
+       width="300" height="227">
+
+  <script>
+    window.onload = function() {
+      var video = document.getElementById('video');
+      var canvas = document.getElementById('canvas');
+      var context = canvas.getContext('2d');
+      var image = document.getElementById('source');
+      var tracker = new tracking.ObjectTracker('face');
+      tracker.setInitialScale(9);
+      tracker.setStepSize(2);
+      tracker.setEdgesDensity(0.04);
+      tracking.track('#video', tracker, { camera: true });
+      tracker.on('track', function(event) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        event.data.forEach(function(rect) {
+          context.drawImage(image, rect.x, rect.y, rect.width, rect.height);
+        });
+      });
+    };
+  </script>
+
+</body>
+</html>
