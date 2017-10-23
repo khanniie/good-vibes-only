@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Face deformation</title>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+    <style>
+    @import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
+
+    body {
+        font-family: 'Lato';
+        background-color: #f0f0f0;
+        margin: 0px auto;
+    }
+
+    #overlay,
+    #webgl {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        -ms-filter: fliph;
+        filter: fliph;
+    }
+
+    #videoel {
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        -ms-filter: fliph;
+        filter: fliph;
+    }
+
+    #container {
+        position: absolute;
+        left: calc(50% - 400px);
+        top: calc(50% - 300px);
+    }
+
+    audio {
+        display: none;
+    }
+
+    #background {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index: 1;
+    }
+
+    #sketch {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index: 2;
+    }
+
+    #smile {
+        display: none;
+    }
+    #transplant{
+    	display: none;
+    }
+    </style>
+</head>
+
+<body>
+    <audio id="aud" controls loop>
+        <source src="natural-no-koishite.mp3" type="audio/mpeg"> Your browser does not support the audio element.
+    </audio>
+    <script src="clmtrackr/utils.js"></script>
+    <script src="clmtrackr/webgl-utils.js"></script>
+    <script src="clmtrackr/clmtrackr.min.js"></script>
+    <script src="clmtrackr/model_pca_20_svm.js"></script>
+    <script src="clmtrackr/face_deformer.js"></script>
+    <div id="content">
+        <div id="container">
+            <canvas id="background" width="800" height='600'></canvas>
+            <canvas id="sketch" width="800" height='600'></canvas>
+            <canvas id="transplant" width="800" height='600'></canvas>
+            <video id="videoel" width="800" height="600" preload="auto" loop playsinline autoplay>
+            </video>
+            <canvas id="overlay" width="600" height="600"></canvas>
+            <canvas id="webgl" width="800" height="600"></canvas>
+        </div>
+        <br/>
+    </div>
+    <img id="smile" src="http://moziru.com/images/emotions-clipart-smiley-face-clip-art-9.gif" width="300" height="227">
+    <script>
+        var background = document.getElementById('background');
+    var ctx1 = background.getContext('2d');
+    ctx1.fillStyle = "rgba(255, 178, 178, 0.2)";
+    ctx1.fillRect(0, 0, 800, 600);
+    ctx1.fillStyle = "rgba(255, 255, 255, 0.1)";
+    ctx1.fillRect(0, 0, 800, 600);
+
+    var sketch = document.getElementById('sketch');
+    var ctx2 = sketch.getContext('2d');
+    var smile = document.getElementById('smile');
+
+    var transplant = document.getElementById('transplant');
+    var ctx3 = transplant.getContext('2d');
+
+
+            ctx3.clearRect(0, 0, 800, 600);
+            ctx2.drawImage(smile, 0, 0, 400, 150);
+			ctx3.drawImage(sketch, 0, 0);
+			ctx2.globalAlpha = 0.2;
+			ctx2.drawImage(transplant, 100, 100);
+
+        //     if (pos) {
+
+        //         ctx2.globalAlpha = 1;
+
+        //         for (var i = getRandomIntInclusive(0, 2); i < 23; i += getRandomIntInclusive(2, 5)) {
+        //             if (i > 15) {
+        //                 ctx2.drawImage(smile, Math.abs(800 - pos[i][0]), pos[i][1] - 200, 100, 100);
+        //             } else if (i > 7) {
+        //                 ctx2.drawImage(smile, Math.abs(800 - pos[i][0]) - 100, pos[i][1], 100, 100);
+        //             } else if (i < 8 && i >= 0) {
+        //                 ctx2.drawImage(smile, Math.abs(800 - pos[i][0]), pos[i][1], 100, 100);
+        //             }
+        //         }
+        //     }
+        // }, 750);
+    </script>
+    </div>
+</body>
+
+</html>

@@ -1,96 +1,44 @@
 <!doctype html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <title>tracking.js - face with camera</title>
-<!--   <link rel="stylesheet" href="assets/demo.css"> -->
-
-  <script src="tracking/tracking-min.js"></script>
-  <script src="tracking/data/face-min.js"></script>
-  <script src="tracking/data/mouth.js"></script>
-<!--    <script src="../node_modules/dat.gui/build/dat.gui.min.js"></script> -->
-<!--   <script src="assets/stats.min.js"></script> -->
-
-  <style>
-  body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-}
-  video, canvas {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    border: 1px solid black;
-
-  }
-  #source{
-    opacity: 0;
-  }
-  #smile{
-    opacity: 0;
-  }
-  </style>
+    <meta charset="utf-8">
+    <title>Solo Utopia</title>
+    <link href="https://fonts.googleapis.com/css?family=Frijole|Special+Elite" rel="stylesheet">
+    <style>
+    body {
+        font-family: 'Special Elite', cursive;
+        background-color: #f0f0f0;
+        padding: 100px;
+        text-align: center;
+    }
+     ol
+    {
+       display: inline-block;
+       margin-left: auto;
+       margin-right: auto;
+    }
+    button{
+      font-family: 'Frijole', cursive;
+      font-size: 2em;
+      padding: 10px;
+      border: none;
+      background-color: rgba(0, 0, 0, 0);
+    }
+    </style>
 </head>
+
 <body>
-
-      <video id="video" width="750" height="500" preload autoplay loop muted></video>
-      <canvas id="canvas" width="750" height="500"></canvas>
-
-  <script src="http://api.html5media.info/1.1.8/html5media.min.js"></script>
-  <img id="source" src="http://moziru.com/images/emotions-clipart-smiley-face-clip-art-9.gif"
-       width="300" height="227">
-  <img id="smile" src="smile.png">
-
-  <script>
-    window.onload = function() {
-      var video = document.getElementById('video');
-      var canvas = document.getElementById('canvas');
-      var context = canvas.getContext('2d');
-      var image = document.getElementById('smile');
-      var moutharray;
-
-      var faceTracker = new tracking.ObjectTracker('face');
-      var mouthTracker = new tracking.ObjectTracker('mouth');
-
-      faceTracker.setInitialScale(4);
-      faceTracker.setStepSize(2.2);
-      faceTracker.setEdgesDensity(0.1);
-
-      mouthTracker.setInitialScale(1);
-      mouthTracker.setStepSize(2.2);
-      mouthTracker.setEdgesDensity(0.08);
-
-      tracking.track('#video', faceTracker, { camera: true });
-      tracking.track('#video', mouthTracker, { camera: true });
-
-      mouthTracker.on('track', function(event) {
-        moutharray = event;
-      });
-
-      faceTracker.on('track', function(event) {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        event.data.forEach(function(faceRect) {
-          moutharray.data.forEach(function(mouthRect){
-            if(mouthRect.x > faceRect.x && mouthRect.x < (faceRect.x + faceRect.width) && mouthRect.y > faceRect.y + ((faceRect.height)*2/3) && mouthRect.y < (faceRect.y + faceRect.height)){
-               //context.clearRect(0, 0, canvas.width, canvas.height);
-               context.drawImage(image, mouthRect.x - 8.5, mouthRect.y - 5, mouthRect.width + 20, mouthRect.height + 10);
-            }
-          });
-        });
-      });
-// faceTracker.on('track', function(event) {
-//         context.clearRect(0, 0, canvas.width, canvas.height);
-
-//         event.data.forEach(function(rect) {
-
-//             context.drawImage(image, rect.x, rect.y, rect.width, rect.height);
-//         });
-//     });
-
-};
-  </script>
-
+  <h1>Experience a world where you're always happy!</h1>
+  <h2>Suggestions:</h2>
+  <ol>
+    <li>Please do this individually, in front of a webcam.</li>
+    <li>Works best on Google Chrome.</li>
+    <li>There will be sound, so you might want headphones.</li>
+    <li>Please give this at least 30 seconds before you exit!</li>
+  </ol>
+<br>
+  <a href="https://connieye.com/good-vibes-only/big-smile.html"><button>start</button></a>
 </body>
+
 </html>
