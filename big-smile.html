@@ -463,18 +463,18 @@
                 console.log("reset alpha");
                 ctx2.globalAlpha = 0.85;
 
-                for (var i = getRandomIntInclusive(0, 2); i < 23; i += getRandomIntInclusive(2, 4)) {
+                for (var i = getRandomIntInclusive(0, 1); i < 23; i += getRandomIntInclusive(2, 3)) {
                     var posdeform = getRandomIntInclusive(-40, 40);
                     if (i > 15) {
-                        ctx2.drawImage(smile, Math.abs(800 - pos[i][0]) + posdeform, pos[i][1] - 200 + posdeform, 100, 100);
+                        ctx2.drawImage(smile, Math.abs(800 - pos[i][0]) + posdeform, pos[i][1] - 200 + posdeform, 75, 75);
                     } else if (i > 7) {
-                        ctx2.drawImage(smile, Math.abs(800 - pos[i][0]) - 100 + posdeform, pos[i][1] + posdeform, 100, 100);
+                        ctx2.drawImage(smile, Math.abs(800 - pos[i][0]) - 75 + posdeform, pos[i][1] + posdeform, 75, 75);
                     } else if (i < 8 && i >= 0) {
-                        ctx2.drawImage(smile, Math.abs(800 - pos[i][0]) + posdeform, pos[i][1] + posdeform, 100, 100);
+                        ctx2.drawImage(smile, Math.abs(800 - pos[i][0]) + posdeform, pos[i][1] + posdeform, 75, 75);
                     }
                 }
             }
-        }, 750);
+        }, 250);
     }
 
     $(function() {
