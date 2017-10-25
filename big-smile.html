@@ -3,6 +3,7 @@
 
 <head>
     <title>Solo Utopia</title>
+    <link rel="icon" href="smile-favicon.png">
     <meta charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
     <style>
@@ -127,7 +128,7 @@
         </div>
         <br/>
     </div>
-    <img id="smile" src="http://moziru.com/images/emotions-clipart-smiley-face-clip-art-9.gif" width="300" height="227">
+    <img id="smile" src="http://www.freeiconspng.com/uploads/stars-png-23.png" width="300" height="227">
     <script>
     //w3 tutorial's random function
     function getRandomIntInclusive(min, max) {
@@ -406,6 +407,7 @@
 
     var presets = {
         "unwell": [0, 0, -2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+        //[-3, 0, -2, 6, 3, 0, 1, 0, 0, 0, 0, 0, -5, 0, 2, 16, 0, 0]
     };
 
     var eig = 0;
@@ -434,7 +436,7 @@
 
         var timer = setInterval(function() {
             if (!runTime) return;
-            if (presets['unwell'][15] > 15) {
+            if (presets['unwell'][15] > 13) {
                 console.log(presets['unwell']);
                 clearTimeout();
                 runTime = false;
@@ -448,26 +450,27 @@
             inc++;
             switchDeformedFace();
 
-        }, 500);
+        }, 750);
 
 
         var sprinkler = setInterval(function() {
             var pos = ctrack.getCurrentPosition();
-            ctx3.globalAlpha = 0.25;
+            ctx3.globalAlpha = 0.3;
             ctx3.clearRect(0, 0, 800, 600);
             ctx3.drawImage(sketch, 0, 0);
             ctx2.clearRect(0, 0, 800, 600);
             if (pos) {
                 console.log("reset alpha");
-                ctx2.globalAlpha = 0.75;
+                ctx2.globalAlpha = 0.85;
 
-                for (var i = getRandomIntInclusive(0, 2); i < 23; i += getRandomIntInclusive(3, 6)) {
+                for (var i = getRandomIntInclusive(0, 2); i < 23; i += getRandomIntInclusive(2, 4)) {
+                    var posdeform = getRandomIntInclusive(-40, 40);
                     if (i > 15) {
-                        ctx2.drawImage(smile, Math.abs(800 - pos[i][0]), pos[i][1] - 200, 100, 100);
+                        ctx2.drawImage(smile, Math.abs(800 - pos[i][0]) + posdeform, pos[i][1] - 200 + posdeform, 100, 100);
                     } else if (i > 7) {
-                        ctx2.drawImage(smile, Math.abs(800 - pos[i][0]) - 100, pos[i][1], 100, 100);
+                        ctx2.drawImage(smile, Math.abs(800 - pos[i][0]) - 100 + posdeform, pos[i][1] + posdeform, 100, 100);
                     } else if (i < 8 && i >= 0) {
-                        ctx2.drawImage(smile, Math.abs(800 - pos[i][0]), pos[i][1], 100, 100);
+                        ctx2.drawImage(smile, Math.abs(800 - pos[i][0]) + posdeform, pos[i][1] + posdeform, 100, 100);
                     }
                 }
             }
