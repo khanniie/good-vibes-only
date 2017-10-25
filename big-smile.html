@@ -405,7 +405,7 @@
     var ph = new parameterHolder();
 
     var presets = {
-        "unwell": [0, 0, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        "unwell": [0, 0, -2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
     };
 
     var eig = 0;
@@ -434,12 +434,15 @@
 
         var timer = setInterval(function() {
             if (!runTime) return;
-            if (presets['unwell'][4] > 30) {
-                console.log(presets['unwell'][4], presets['unwell'][3], presets['unwell'][12]);
+            if (presets['unwell'][15] > 15) {
+                console.log(presets['unwell']);
                 clearTimeout();
                 runTime = false;
             }
-            presets['unwell'][4] += 1;
+            presets['unwell'][15] += 1;
+            presets['unwell'][0] -= Math.floor((inc % 5) / 4);
+            presets['unwell'][3] += Math.floor((inc % 5) / 4);
+            presets['unwell'][4] += Math.floor((inc % 5) / 4);
             presets['unwell'][3] += Math.floor((inc % 5) / 4);
             presets['unwell'][12] -= Math.floor((inc % 3) / 2);
             inc++;
@@ -450,15 +453,15 @@
 
         var sprinkler = setInterval(function() {
             var pos = ctrack.getCurrentPosition();
-            ctx3.globalAlpha = 0.35;
+            ctx3.globalAlpha = 0.25;
             ctx3.clearRect(0, 0, 800, 600);
             ctx3.drawImage(sketch, 0, 0);
             ctx2.clearRect(0, 0, 800, 600);
             if (pos) {
                 console.log("reset alpha");
-                ctx2.globalAlpha = 1;
+                ctx2.globalAlpha = 0.75;
 
-                for (var i = getRandomIntInclusive(0, 2); i < 23; i += getRandomIntInclusive(2, 5)) {
+                for (var i = getRandomIntInclusive(0, 2); i < 23; i += getRandomIntInclusive(3, 6)) {
                     if (i > 15) {
                         ctx2.drawImage(smile, Math.abs(800 - pos[i][0]), pos[i][1] - 200, 100, 100);
                     } else if (i > 7) {
@@ -468,7 +471,7 @@
                     }
                 }
             }
-        }, 500);
+        }, 750);
     }
 
     $(function() {
