@@ -1,7 +1,7 @@
 <head>
   <title>My A-Frame Scene</title>
   <script src="https://aframe.io/releases/0.3.0/aframe.min.js"></script>
-  <script src="https://rawgit.com/flysonic10/aframe-passthrough/master/dist/aframe-passthrough-component.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/flysonic10/aframe-passthrough/dist/aframe-passthrough-component.min.js"></script>
 </head>
 
 <body>
